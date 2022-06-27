@@ -1,0 +1,119 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="ChangeListManager">
+    <list default="true" id="480d8bcb-bfe2-4c26-ad7c-76a38ec6efcf" name="Default Changelist" comment="" />
+    <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
+    <option name="SHOW_DIALOG" value="false" />
+    <option name="HIGHLIGHT_CONFLICTS" value="true" />
+    <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
+    <option name="LAST_RESOLUTION" value="IGNORE" />
+  </component>
+  <component name="FileTemplateManagerImpl">
+    <option name="RECENT_TEMPLATES">
+      <list>
+        <option value="Python Script" />
+        <option value="HTML File" />
+      </list>
+    </option>
+  </component>
+  <component name="ProjectId" id="29yvUfp0pXkcugBhV2lmjERN2RN" />
+  <component name="PropertiesComponent">
+    <property name="DefaultHtmlFileTemplate" value="HTML File" />
+    <property name="WebServerToolWindowFactoryState" value="false" />
+    <property name="last_opened_file_path" value="$PROJECT_DIR$" />
+  </component>
+  <component name="RecentsManager">
+    <key name="MoveFile.RECENT_KEYS">
+      <recent name="G:\Visual I\NEW PROJECT\Monirul\KTSHOP\templates\cart" />
+      <recent name="G:\Visual I\NEW PROJECT\Monirul\KTSHOP\templates\login" />
+    </key>
+    <key name="CopyFile.RECENT_KEYS">
+      <recent name="G:\Visual I\NEW PROJECT\Monirul\KTSHOP\shop" />
+      <recent name="G:\Visual I\NEW PROJECT\Monirul\KTSHOP\templates\dashboard" />
+      <recent name="G:\Visual I\NEW PROJECT\Monirul\KTSHOP\cart" />
+      <recent name="G:\Visual I\NEW PROJECT\Monirul\KTSHOP\templates\shop" />
+    </key>
+  </component>
+  <component name="RunDashboard">
+    <option name="ruleStates">
+      <list>
+        <RuleState>
+          <option name="name" value="ConfigurationTypeDashboardGroupingRule" />
+        </RuleState>
+        <RuleState>
+          <option name="name" value="StatusDashboardGroupingRule" />
+        </RuleState>
+      </list>
+    </option>
+  </component>
+  <component name="RunManager">
+    <configuration name="KTSHOP" type="Python.DjangoServer" factoryName="Django server">
+      <module name="KTSHOP" />
+      <option name="INTERPRETER_OPTIONS" value="" />
+      <option name="PARENT_ENVS" value="true" />
+      <envs>
+        <env name="PYTHONUNBUFFERED" value="1" />
+      </envs>
+      <option name="SDK_HOME" value="" />
+      <option name="WORKING_DIRECTORY" value="" />
+      <option name="IS_MODULE_SDK" value="false" />
+      <option name="ADD_CONTENT_ROOTS" value="true" />
+      <option name="ADD_SOURCE_ROOTS" value="true" />
+      <option name="launchJavascriptDebuger" value="false" />
+      <option name="port" value="8000" />
+      <option name="host" value="" />
+      <option name="additionalOptions" value="" />
+      <option name="browserUrl" value="" />
+      <option name="runTestServer" value="false" />
+      <option name="runNoReload" value="false" />
+      <option name="useCustomRunCommand" value="false" />
+      <option name="customRunCommand" value="" />
+      <method v="2" />
+    </configuration>
+  </component>
+  <component name="SvnConfiguration">
+    <configuration />
+  </component>
+  <component name="TaskManager">
+    <task active="true" id="Default" summary="Default task">
+      <changelist id="480d8bcb-bfe2-4c26-ad7c-76a38ec6efcf" name="Default Changelist" comment="" />
+      <created>1654098156192</created>
+      <option name="number" value="Default" />
+      <option name="presentableId" value="Default" />
+      <updated>1654098156192</updated>
+      <workItem from="1654098158979" duration="10588000" />
+      <workItem from="1654183683504" duration="70000" />
+      <workItem from="1654360365856" duration="7290000" />
+      <workItem from="1654448845048" duration="1242000" />
+      <workItem from="1654479339213" duration="30000" />
+      <workItem from="1654537230852" duration="5383000" />
+      <workItem from="1654701825850" duration="6172000" />
+      <workItem from="1654717319854" duration="13000" />
+      <workItem from="1654785388531" duration="1187000" />
+      <workItem from="1654837891934" duration="598000" />
+      <workItem from="1654958267667" duration="7309000" />
+      <workItem from="1655137273672" duration="7461000" />
+      <workItem from="1655225765422" duration="6373000" />
+      <workItem from="1655309272592" duration="5382000" />
+      <workItem from="1655314755084" duration="3231000" />
+      <workItem from="1655397790692" duration="10071000" />
+      <workItem from="1655564984692" duration="731000" />
+      <workItem from="1655658255648" duration="2974000" />
+      <workItem from="1655747784611" duration="5000" />
+      <workItem from="1655747794759" duration="5000" />
+      <workItem from="1655747813382" duration="18000" />
+      <workItem from="1655747842606" duration="7000" />
+      <workItem from="1655747888308" duration="915000" />
+      <workItem from="1656000269921" duration="706000" />
+      <workItem from="1656012598536" duration="401000" />
+      <workItem from="1656060905299" duration="3146000" />
+      <workItem from="1656179618126" duration="82000" />
+      <workItem from="1656180535014" duration="25000" />
+      <workItem from="1656339806005" duration="418000" />
+    </task>
+    <servers />
+  </component>
+  <component name="TypeScriptGeneratedFilesManager">
+    <option name="version" value="1" />
+  </component>
+</project>

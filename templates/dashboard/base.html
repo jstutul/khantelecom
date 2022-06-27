@@ -1,0 +1,200 @@
+<!DOCTYPE html>
+{% load static %}
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <title>Dashboard</title>
+    <!-- SEO Meta Tags-->
+    <meta name="description" content="Khan Telecom,js tutul,Tutul,jafor sadik tutul">
+
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    <!-- Vendor Styles including: Font Icons, Plugins, etc.-->
+       <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.1.1/css/all.min.css" />
+    <link rel="stylesheet" media="screen" href="{% static 'vendor/simplebar/dist/simplebar.min.css' %}"/>
+    <link rel="stylesheet" media="screen" href="{% static 'vendor/tiny-slider/dist/tiny-slider.css' %}"/>
+    <link rel="stylesheet" media="screen" href="{% static 'vendor/chartist/dist/chartist.min.css' %}"/>
+    <link rel="stylesheet" media="screen" href="{% static 'vendor/prismjs/plugins/toolbar/prism-toolbar.css' %}"/>
+    <link rel="stylesheet" media="screen" href="{% static 'vendor/prismjs/plugins/line-numbers/prism-line-numbers.css' %}"/>
+    <link rel="stylesheet" media="screen" href="{% static 'vendor/flatpickr/dist/flatpickr.min.css' %}"/>
+    <!-- Main Theme Styles + Bootstrap-->
+    <link rel="stylesheet" media="screen" href="{% static 'css/theme.min.css' %}">
+  </head>
+  <!-- Body-->
+  <body class="handheld-toolbar-enabled">
+
+    <main class="page-wrapper">
+
+      <header class="bg-light shadow-sm navbar-sticky">
+        <div class="navbar navbar-expand-lg navbar-light">
+          <div class="container">
+              <a class="navbar-brand d-none d-sm-block flex-shrink-0 me-4 order-lg-1" href="{% url 'App_Shop:shop' %}">
+                  Khan Telecom
+              </a>
+              <a class="navbar-brand d-sm-none me-2 order-lg-1" href="{% url 'App_Shop:shop' %}">
+                  Khan Telecom
+              </a>
+            <!-- Toolbar-->
+            <div class="navbar-toolbar d-flex align-items-center order-lg-3">
+              <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarCollapse">
+                  <span class="navbar-toggler-icon"></span>
+              </button>
+               <div class="navbar-toolbar d-flex flex-shrink-0 align-items-center ms-xl-2">
+            <button class="navbar-toggler" type="button" data-bs-toggle="offcanvas" data-bs-target="#sideNav">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+                {% if request.user.is_authenticated %}
+              <a class="navbar-tool ms-1 ms-lg-0 me-n1 me-lg-2" href="{% url 'App_Admin:dashboard' %}">
+                <div class="navbar-tool-icon-box">
+                    <i class="navbar-tool-icon fa fa-user"></i>
+                </div>
+                <div class="navbar-tool-text ms-n3">
+                    <small>Hello, {{request.user}}</small>
+                    Dashboard
+                </div>
+              </a>
+            {% endif %}
+          </div>
+            </div>
+          </div>
+        </div>
+      </header>
+
+      <!-- Dashboard header-->
+      <div class="page-title-overlap bg-accent pt-4">
+        <div class="container d-flex flex-wrap flex-sm-nowrap justify-content-center justify-content-sm-between align-items-center pt-2">
+          <div class="d-flex">
+            <div class="text-sm-start me-5">
+              <h4 class="text-light">Welcome to Sales Dashboard</h4>
+              <div class="text-light" id="txt"></div>
+            </div>
+
+          </div>
+        </div>
+      </div>
+
+      <div class="container mb-5 pb-3">
+        <div class="bg-light shadow-lg rounded-3 overflow-hidden">
+          <div class="row">
+            <!-- Sidebar-->
+            <aside class="col-lg-3 pe-xl-5">
+              <div class="h-100 border-end mb-2">
+                <div class="d-lg-block collapse" id="account-menu">
+                  <div class="bg-secondary p-4">
+                    <h3 class="fs-sm mb-0 text-muted">Seller Dashboard</h3>
+                  </div>
+                  <ul class="list-unstyled mb-0">
+                    <li class="border-bottom mb-0">
+                        <a class="nav-link-style d-flex align-items-center px-4 py-3 active" href="{% url 'App_Admin:dashboard' %}">
+                            <i class="fa fa-dashboard opacity-60 me-2"></i>
+                            Dashboard
+                        </a>
+                    </li>
+                    <li class="border-bottom mb-0">
+                        <a class="nav-link-style d-flex align-items-center px-4 py-3" href="{% url 'App_Admin:saleslist' %}">
+                            <i class="fa fa-dollar opacity-60 me-2"></i>
+                            Sales
+                        </a>
+                    </li>
+                    <li class="border-bottom mb-0">
+                        <a class="nav-link-style d-flex align-items-center px-4 py-3" href="{% url 'App_Admin:addexpense' %}">
+                            <i class="fa fa-cloud-upload opacity-60 me-2"></i>
+                            Expense List
+                        </a>
+                    </li>
+                    <li class="border-bottom mb-0">
+                        <a class="nav-link-style d-flex align-items-center px-4 py-3" href="{% url 'App_Admin:category' %}">
+                            <i class="fa fa-box-open opacity-60 me-2"></i>Category
+                        </a>
+                    </li>
+                    <li class="mb-0">
+                        <a class="nav-link-style d-flex align-items-center px-4 py-3" href="{% url 'App_Shop:logout' %}">
+                            <i class="fa fa-sign-out opacity-60 me-2"></i>Sign out
+                        </a>
+                    </li>
+                  </ul>
+                  <hr>
+                </div>
+              </div>
+            </aside>
+            <!-- Content-->
+
+            {% block dashboard %}
+
+            {% endblock %}
+
+
+
+
+
+          </div>
+        </div>
+      </div>
+    </main>
+
+    <footer class="footer bg-dark">
+
+      <div class="pt-2">
+            <div class="text-center text-white">© All rights reserved. Made by <a class="text-light" href="https://createx.studio/" target="_blank" rel="noopener">Createx Studio</a></div>
+          </div>
+    </footer>
+    <!-- Toolbar for handheld devices (Marketplace)-->
+    <div class="handheld-toolbar">
+      <div class="d-table table-layout-fixed w-100">
+          <a class="d-table-cell handheld-toolbar-item" href="dashboard-favorites.html">
+              <span class="handheld-toolbar-icon">
+                  <i class="ci-heart"></i>
+              </span>
+              <span class="handheld-toolbar-label">Favorites</span>
+          </a>
+          <a class="d-table-cell handheld-toolbar-item" href="javascript:void(0)" data-bs-toggle="collapse" data-bs-target="#navbarCollapse" onclick="window.scrollTo(0, 0)"><span class="handheld-toolbar-icon"><i class="ci-menu"></i></span><span class="handheld-toolbar-label">Menu</span></a><a class="d-table-cell handheld-toolbar-item" href="marketplace-cart.html"><span class="handheld-toolbar-icon"><i class="ci-cart"></i><span class="badge bg-primary rounded-pill ms-1">3</span></span><span class="handheld-toolbar-label">$56.00</span></a></div>
+    </div>
+    <!-- Back To Top Button--><a class="btn-scroll-top" href="#top" data-scroll><span class="btn-scroll-top-tooltip text-muted fs-sm me-2">Top</span><i class="btn-scroll-top-icon fa fa-arrow-up">   </i></a>
+    <!-- Vendor scrits: js libraries and plugins-->
+    <script src="{% static 'vendor/bootstrap/dist/js/bootstrap.bundle.min.js' %}"></script>
+    <script src="{% static 'vendor/simplebar/dist/simplebar.min.js' %}"></script>
+    <script src="{% static 'vendor/tiny-slider/dist/min/tiny-slider.js' %}"></script>
+    <script src="{% static 'vendor/smooth-scroll/dist/smooth-scroll.polyfills.min.js' %}"></script>
+    <script src="{% static 'vendor/chartist/dist/chartist.min.js' %}"></script>
+    <script src="{% static 'vendor/prismjs/components/prism-core.min.js' %}"></script>
+    <script src="{% static 'vendor/prismjs/components/prism-markup.min.js' %}"></script>
+    <script src="{% static 'vendor/prismjs/components/prism-clike.min.js' %}"></script>
+    <script src="{% static 'vendor/prismjs/components/prism-javascript.min.js' %}"></script>
+    <script src="{% static 'vendor/prismjs/components/prism-pug.min.js' %}"></script>
+    <script src="{% static 'vendor/prismjs/plugins/toolbar/prism-toolbar.min.js' %}"></script>
+    <script src="{% static 'vendor/prismjs/plugins/copy-to-clipboard/prism-copy-to-clipboard.min.js' %}"></script>
+    <script src="{% static 'vendor/prismjs/plugins/line-numbers/prism-line-numbers.min.js' %}"></script>
+    <script src="{% static 'vendor/flatpickr/dist/flatpickr.min.js' %}"></script>
+    <script src="{% static 'vendor/flatpickr/dist/plugins/rangePlugin.js' %}"></script>
+    <!-- Main theme script-->
+    <script src="{% static 'js/theme.min.js' %}"></script>
+  <script>
+      startTime();
+    function startTime() {
+      const today = new Date();
+      let h = today.getHours();
+      let m = today.getMinutes();
+      let s = today.getSeconds();
+      m = checkTime(m);
+      s = checkTime(s);
+      document.getElementById('txt').innerHTML =  h + ":" + m + ":" + s;
+      setTimeout(startTime, 1000);
+    }
+
+    function checkTime(i) {
+      if (i < 10) {i = "0" + i};  // add zero in front of numbers < 10
+      return i;
+    }
+    </script>
+    <script
+  src="https://code.jquery.com/jquery-3.6.0.min.js"
+  integrity="sha256-/xUj+3OJU5yExlq6GSYGSHk7tPXikynS7ogEvDej/m4="
+  crossorigin="anonymous"></script>
+  <script src="{% static 'html2pdf.bundle.min.js' %}"></script>
+    <script>
+      {% block js %}
+
+      {% endblock %}
+  </script>
+  </body>
+</html>

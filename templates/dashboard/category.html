@@ -1,0 +1,51 @@
+{% extends 'dashboard/base.html' %}
+{% load crispy_forms_tags %}
+{% load static %}
+{% block dashboard %}
+
+
+    <section class="col-lg-9 py-4" style="padding: 0px 4%;">
+    <h3>Category List</h3>
+
+    <div class="table-responsive">
+        <table id="example" class="table table-striped" width="100%">
+    <thead>
+        <tr>
+            <th>Sl</th>
+            <th>Category Name</th>
+            <th>Category Wise Product</th>
+            <th>Icon</th>
+        </tr>
+    </thead>
+    <tbody>
+    {% for category in category %}
+     <tr>
+            <td>{{ forloop.counter }}</td>
+            <td>{{ category.name }}</td>
+            <td>{{ category.get_product_count }}</td>
+            <td><img src="{{ category.icon.url  }}" width="40" height="40" alt="icon"></td>
+     </tr>
+    {% endfor %}
+
+
+    </tbody>
+</table>
+    </div>
+    </section>
+
+ <script>
+    var filterbutton=document.getElementById("filterBtn2");
+    filterbutton.addEventListener('click',function () {
+            document.getElementById("filterbill").submit();
+    });
+
+    </script>
+{% endblock %}
+ {% block js %}
+window.setTimeout(function() {
+$(".alert").fadeTo(500, 0).slideUp(500, function(){
+$(this).remove();
+});
+}, 4000);
+      {% endblock %}
+

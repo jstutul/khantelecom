@@ -1,0 +1,131 @@
+{% extends 'dashboard/base.html' %}
+{% load crispy_forms_tags %}
+{% load static %}
+{% block dashboard %}
+
+
+    <section class="col-lg-9 py-4" style="padding: 0px 4%;">
+
+     <form class="needs-validation modal fade" method="post" id="add-address" tabindex="-1" novalidate> {% csrf_token %}
+        <div class="modal-dialog modal-md">
+          <div class="modal-content">
+            <div class="modal-header">
+              <h5 class="modal-title">Add a new Bill</h5>
+              <button class="btn-close" type="button" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+              <div class="row gx-4 gy-3">
+                {{ form|crispy }}
+              </div>
+            </div>
+            <div class="modal-footer">
+              <button class="btn btn-secondary" type="button" data-bs-dismiss="modal">Close</button>
+              <button class="btn btn-primary btn-shadow" type="submit">Add Bill</button>
+            </div>
+          </div>
+        </div>
+      </form>
+
+    <h3>My Expense and Bill List</h3>
+    <div class="pt-4">
+        <a class="btn btn-primary" href="#add-address" data-bs-toggle="modal">Add Bill</a>
+    </div>
+        <div class="my-2" id="messagebar">
+             {%for message in messages %}
+            {%if "bill_add" in message.tags %}
+            <div class="alert alert-success alert-dismissible" role="alert">
+               {{ message }}
+            </div>
+            {% endif %}
+            {% endfor %}
+         </div>
+    <form method="POST" class="row my-2" id="filterbill">{% csrf_token %}
+                        <div class="col-md-6">
+                            <div class="input-group" >
+                          <span class="input-group-text">
+                            <i class="fa fa-calendar"></i>
+                          </span>
+                          <input class="form-control date-picker date-range" value="{{ sDate }}" name="daterange" type="text" placeholder="From date" data-datepicker-options='{"altInput": true, "altFormat": "F j, Y","dateFormat": "Y-m-d"}' data-linked-input="#end-date">
+                          <input class="form-control date-picker"  value="{{ eDate }}" type="text" placeholder="To date" data-datepicker-options='{"altInput": true, "altFormat": "F j, Y", "dateFormat": "Y-m-d"}' id="end-date">
+                        </div>
+                        </div>
+                        <div class="col-md-4">
+                           <div class="input-group" >
+                             <span class="input-group-text">
+                            <i class="fa fa-user"></i>
+                          </span>
+                              <select class="form-select" name="sellerName" id="validationCustom03">
+                                <option value="">Choose</option>
+                                  {% for user in sellers %}
+                                      {% if sellerName == user.id %}
+                                        <option value="{{ user.id }}" selected >{{ user }}</option>
+                                      {% else %}
+                                        <option value="{{ user.id }}">{{ user }}</option>
+                                      {% endif %}
+                                  {% endfor %}
+                              </select>
+                        </div>
+                        </div>
+                       <div class="col-md-2">
+                            <div class="input-group" >
+                              <select class="form-select" id="validationCustom03" name="pageNo">
+                                <option value="10" >10</option>
+                                <option value="20" >20</option>
+                                <option value="50" >50</option>
+                              </select>
+                        </div>
+                       </div>
+                      <div class="col-md-1">
+                            <div class="input-group" >
+                                <input type="hidden" name="filterForm">
+                              <button type="button" class="btn btn-outline-danger btn-sm my-2" id="filterBtn2">Filter</button>
+                        </div>
+                       </div>
+                  </form>
+    <div class="table-responsive">
+        <table id="exampleexpense" class="table table-striped" width="100%">
+    <thead>
+        <tr>
+            <th>Sl</th>
+            <th>Seller</th>
+            <th>Bill Type</th>
+            <th>Amount</th>
+            <th>Date</th>
+        </tr>
+    </thead>
+    <tbody>
+    {% for bill in mybill %}
+     <tr>
+            <td>{{ forloop.counter }}</td>
+            <td>{{ bill.user }}</td>
+            <td>{{ bill.billName }}</td>
+            <td>{{ bill.total }}</td>
+            <td>{{ bill.timestamp }}</td>
+     </tr>
+    {% endfor %}
+
+
+    </tbody>
+</table>
+    </div>
+    </section>
+
+ <script>
+    var filterbutton=document.getElementById("filterBtn2");
+    filterbutton.addEventListener('click',function () {
+            document.getElementById("filterbill").submit();
+    });
+
+    </script>
+{% endblock %}
+ {% block js %}
+window.setTimeout(function() {
+$(".alert").fadeTo(500, 0).slideUp(500, function(){
+$(this).remove();
+});
+}, 4000);
+
+    });
+
+ {% endblock %}
+

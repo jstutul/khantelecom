@@ -1,0 +1,90 @@
+{% extends 'dashboard/base.html' %}
+{% load static %}
+{% load dashboard %}
+{% block dashboard %}
+ <section class="col-lg-8 pt-lg-4 pb-4 mb-3">
+              <div class="pt-2 px-4 ps-lg-0 pe-xl-5">
+                <h2 class="h3 py-2 text-center text-sm-start">Statistic of Shop</h2>
+                <div class="row mx-n2 pt-2">
+                  <div class="col-md-4 col-sm-6 px-2 mb-4">
+                    <div class="bg-secondary h-100 rounded-3 p-4 text-center">
+                      <h3 class="fs-sm text-muted">Total Product</h3>
+                      <p class="h2 mb-2">{{ request.user|total_product }}</p>
+                    </div>
+                  </div>
+
+                  <div class="col-md-4 col-sm-6 px-2 mb-4">
+                    <div class="bg-secondary h-100 rounded-3 p-4 text-center">
+                      <h3 class="fs-sm text-muted">Total Sale Amount</h3>
+                      <p class="h2 mb-2">৳ {{ request.user|total_sale }}</p>
+                    </div>
+                  </div>
+                  <div class="col-md-4 col-sm-12 px-2 mb-4">
+                    <div class="bg-secondary h-100 rounded-3 p-4 text-center">
+                      <h3 class="fs-sm text-muted">Total product Sale</h3>
+                      <p class="h2 mb-2">{{ request.user|total_product_sale }}</p>
+                    </div>
+                  </div>
+                  <div class="col-md-4 col-sm-12 px-2 mb-4">
+                    <div class="bg-secondary h-100 rounded-3 p-4 text-center">
+                      <h3 class="fs-sm text-muted">Total Bill</h3>
+                      <p class="h2 mb-2">৳ {{ request.user|total_bill }}</p>
+                    </div>
+                  </div>
+                  <div class="col-md-4 col-sm-12 px-2 mb-4">
+                    <div class="bg-secondary h-100 rounded-3 p-4 text-center">
+                      <h3 class="fs-sm text-muted">Total Purchase</h3>
+                      <p class="h2 mb-2">৳ {{ request.user|total_purchase_amount }}</p>
+                    </div>
+                  </div>
+                    <div class="col-md-4 col-sm-12 px-2 mb-4">
+                    <div class="bg-secondary h-100 rounded-3 p-4 text-center">
+                      <h3 class="fs-sm text-muted">Total Income</h3>
+                      <p class="h2 mb-2">৳ {{ request.user|total_income }}</p>
+                    </div>
+                  </div>
+                </div>
+{#                  line chart#}
+                <div class="col-md-12">
+                <form class="needs-validation" id="filterForm" method="post">{% csrf_token %}
+                  <div class="row">
+                    <div class="col-md-3 mb-3">
+                      <select class="form-select" name="yearname" id="filterYear" required>
+                        {% if year != "" %}
+                        <option value="year" selected >{{ year }}</option>
+                        {% endif %}
+                        <option value="2022">2022</option>
+                        <option value="2023">2023</option>
+                        <option value="2024">2024</option>
+                        <option value="2025">2025</option>
+                        <option value="2026">2026</option>
+                        <option value="2027">2027</option>
+                        <option value="2028">2028</option>
+                        <option value="2029">2029</option>
+                      </select>
+                    </div>
+                  </div>
+                </form>
+               <div class="d-flex flex-wrap justify-content-center fs-ms">
+              <div class="border rounded py-1 px-2 me-2 mb-2">
+                <div class="d-inline-block align-middle me-1" style="width: .75rem; height: .75rem; background-color: #f34770;"></div>
+                <span class="d-inline-block align-middle">Selling </span>
+              </div>
+              <div class="border rounded py-1 px-2 me-2 mb-2">
+                <div class="d-inline-block align-middle me-1" style="width: .75rem; height: .75rem; background-color: #fea569;"></div>
+                <span class="d-inline-block align-middle">Purchasing</span>
+              </div>
+            </div>
+                <div class="ct-chart ct-perfect-fourth" data-bar-chart='{"labels": ["Jan", "Feb", "Mar", "Apr", "May", "Jun","Jul","Aug","Sept","Oct","Nov","Dec"], "series": [{{ getPursG }}, {{ getSellG }} ]}', data-series-color='{"colors": ["#f34770", "#fea569"]}'></div>
+                </div>
+              </div>
+            </section>
+    <section>
+
+    </section>
+    <script>
+    document.getElementById("filterYear").addEventListener('change',function () {
+        document.getElementById("filterForm").submit();
+    })
+    </script>
+{% endblock %}

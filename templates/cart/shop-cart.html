@@ -1,0 +1,143 @@
+{% extends 'shop/base.html' %}
+{% load dashboard %}
+{% load static %}
+{% block title %}
+Cart Zone
+{% endblock %}
+
+{% block content %}
+ <main class="page-wrapper">
+
+      <div class="page-title-overlap bg-dark pt-4">
+        <div class="container d-lg-flex justify-content-between py-2 py-lg-3">
+          <div class="order-lg-2 mb-3 mb-lg-0 pt-lg-2">
+
+          </div>
+          <div class="order-lg-1 pe-lg-4 text-center text-lg-start">
+            <h1 class="h3 text-light mb-0">Your cart</h1>
+          </div>
+        </div>
+      </div>
+      <div class="container pb-5 mb-2 mb-md-4">
+        <div class="row">
+          <!-- List of items-->
+          <section class="col-lg-8">
+            <div class="d-flex justify-content-between align-items-center pt-3 pb-4 pb-sm-5 mt-1">
+            <h4 class="text-white">Order Process</h4>
+            </div>
+          {%for message in messages %}
+                     {%if "cart" in message.tags %}
+                      <div class="alert alert-primary" role="alert">
+                     {{ message }}
+                    </div>
+                {% endif %}
+              {% endfor %}
+            <!-- Item-->
+             {% for cart in carts %}
+            <div class="d-sm-flex justify-content-between align-items-center my-2 pb-3 border-bottom">
+              <div class="d-block d-sm-flex align-items-center text-center text-sm-start">
+                   <a class="btn btn-danger btn-sm" href="{% url 'App_Cart:remove' pk=cart.item.id %}"><span class="fs-sm">X</span></a>
+                  <a class="d-inline-block flex-shrink-0 mx-auto me-sm-4" href="{% url 'App_Shop:singleproduct' cart.item.id %}">
+                      <img src="{{ cart.item.photo.url }}" style="width: 80px;padding: 10px;" alt="Product"></a>
+                <div class="pt-2" style="width: 22rem;">
+                  <h3 class="product-title fs-base mb-2">
+                      <a href="{% url 'App_Shop:singleproduct' cart.item.id %}">{{ cart.item.name }}</a></h3>
+                  <div class="fs-sm">
+                      <span class="text-muted"></span>{{ cart.item.category }}
+                  </div>
+                  <div class="fs-lg text-accent pt-2">{{ cart.item.price }}</div>
+                </div>
+              </div>
+              <div class="pt-2 pt-sm-0 ps-sm-3 mx-auto mx-sm-0 text-center text-sm-start" style="max-width: 9rem;">
+               <div class="m-0">
+                    <label class="form-label" for="quantity1">Selling Price</label>
+                <input  class="col form-control" id="price_{{ cart.id }}" onblur="adjustTotal()" oninput="this.value = this.value.replace(/[^0-9.]/g, '').replace(/(\..*?)\..*/g, '$1').replace(/^0[^.]/, '0');" type="text" min="{{ cart.item.price }}" value="{{ cart.item.price }}">
+                <input  class="col form-control" id="quantity_{{ cart.id }}" type="hidden"  value="{{ cart.quantity }}">
+               </div>
+              </div>
+              <div class="pt-2 pt-sm-0 ps-sm-3 mx-auto mx-sm-0 text-center text-sm-start" style="max-width: 11rem;">
+                <label class="form-label" for="quantity1">Quantity</label>
+                  <div style="display: inline-flex;flex-direction: row;gap: 12px;">
+                      <div>
+                          <a href="{% url 'App_Cart:decrease' pk=cart.item.id %}" class="btn btn-danger btn-sm">-</a>
+                      </div>
+                      <div>
+                          <input  class="form-control" type="text" id="quantity1" min="1" disabled value="{{ cart.quantity }}">
+                      </div>
+                      <div>
+                          <a href="{% url 'App_Cart:increase' pk=cart.item.id %}" class="btn btn-success btn-sm">+</a>
+                      </div>
+                  </div>
+
+              </div>
+            </div>
+            {% endfor %}
+          </section>
+          <!-- Sidebar-->
+          <aside class="col-lg-4 pt-4 pt-lg-0 ps-xl-5">
+            <div class="bg-white rounded-3 shadow-lg p-4">
+              <form method="post" class="py-2 px-xl-2">{% csrf_token %}
+                <div class="text-center mb-4 pb-3 border-bottom">
+                  <h2 class="h6 mb-3 pb-1">Total</h2>
+                  <h3 class="fw-normal" id="totalPrice"> {{order.get_totals | floatformat:0 }} &#2547 </h3>
+                </div>
+                <div class="mb-3 mb-4">
+                  <label class="form-label mb-3" for="order-comments">
+                      <span class="fw-medium">Customer Name</span>
+                  </label>
+                  <input class="form-control"  required name="customer_name" id="order-comments"/>
+                </div>
+                <div class="mb-3 mb-4">
+                  <label class="form-label mb-3" for="order-comments">
+                      <span class="fw-medium">Phone No</span>
+                  </label>
+                  <input class="form-control" required name="customer_phone"  id="order-comments"/>
+                </div>
+                <div class="mb-3 mb-4">
+                  <label class="form-label mb-3" for="order-comments">
+                      <span class="fw-medium">Address</span>
+                  </label>
+                  <input class="form-control" name="customer_address" id="order-comments"/>
+                </div>
+                <div class="accordion" id="order-options">
+                </div>
+                  <input type="hidden" name="total" value="" id="exacttotal">
+                  <button type="submit" class="btn btn-primary btn-shadow d-block w-100 mt-4">
+                  <i class="fa fa-arrow-right fs-lg me-2"></i>Proceed Order</button>
+              </form>
+            </div>
+          </aside>
+        </div>
+      </div>
+    </main>
+
+
+    <script>
+    var cartitem=parseInt(document.getElementById("getcartTotals").innerHTML);
+    console.log(cartitem);
+    if (parseInt(cartitem) > 0){
+        adjustTotal();
+    }
+    function adjustTotal(){
+            let total=0;
+          {% for cart in carts %}
+            var actualPrice="{{ cart.item.price }}";
+            var x=document.getElementById("price_{{ cart.id }}").value;
+            var y=document.getElementById("quantity_{{ cart.id }}").value;
+             if(parseInt(x)< parseInt(actualPrice)){
+                 alert("You can not Sell Less then your actual price");
+                 document.getElementById("price_{{ cart.id }}").value="{{ cart.item.price }}";
+                 window.location.href = "{% url 'App_Cart:cart' %}";
+                 document.getElementById("exacttotal").value="{{cart.item.price}}";
+             }
+             else{
+                 total+=parseFloat(x)*parseInt(y);
+                 document.getElementById("totalPrice").innerHTML=`${total} ৳`;
+                 document.getElementById("exacttotal").value=total;
+             }
+         {% endfor %}
+    console.log(total);
+    }
+
+    </script>
+{% endblock %}

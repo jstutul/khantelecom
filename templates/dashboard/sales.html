@@ -1,0 +1,137 @@
+{% extends 'dashboard/base.html' %}
+{% load static %}
+
+{% block dashboard %}
+<section class="col-lg-9 pt-lg-4 pb-4 mb-3">
+              <div class="pt-2 px-4 ps-lg-0 pe-xl-5">
+                <!-- Title-->
+                <div class="d-sm-flex flex-wrap justify-content-between align-items-center border-bottom">
+                  <h2 class="h3 py-2 me-2 text-center text-sm-start">Your Sales List
+                      <span class="badge bg-faded-accent fs-sm text-body align-middle ms-2">{{ all_sales.count }}</span>
+                  </h2>
+                  <form method="POST" class="row my-2" id="filterSales">{% csrf_token %}
+                        <div class="col-md-6">
+                            <div class="input-group" >
+                          <span class="input-group-text">
+                            <i class="fa fa-calendar"></i>
+                          </span>
+                          <input name="startDate" value="{{ sDate }}" class="form-control date-picker" type="text" placeholder="From date" data-datepicker-options='{"altInput": true, "altFormat": "F j, Y", "dateFormat": "Y-m-d"}' data-linked-input="#end-date">
+                          <input name="endDate" value="{{ eDate }}" class="form-control date-picker" type="text" placeholder="To date" data-datepicker-options='{"altInput": true, "altFormat": "F j, Y", "dateFormat": "Y-m-d"}' id="end-date">
+                        </div>
+                        </div>
+                        <div class="col-md-4">
+                           <div class="input-group" >
+                             <span class="input-group-text">
+                            <i class="fa fa-user"></i>
+                          </span>
+                              <select class="form-select" name="sellerName" id="validationCustom03">
+                                <option value="">Choose</option>
+                                  {% for user in sellers %}
+                                      {% if sellerName == user.id %}
+                                        <option value="{{ user.id }}" selected >{{ user }}</option>
+                                      {% else %}
+                                        <option value="{{ user.id }}">{{ user }}</option>
+                                      {% endif %}
+                                  {% endfor %}
+                              </select>
+                        </div>
+                        </div>
+                       <div class="col-md-2">
+                            <div class="input-group" >
+                              <select class="form-select" id="validationCustom03" name="pageNo">
+                                <option value="5" >5</option>
+                                <option value="10" >10</option>
+                                <option value="20" >20</option>
+                                <option value="50" >50</option>
+                                <option value="100" >100</option>
+                              </select>
+                        </div>
+                       </div>
+                      <div class="col-md-1">
+                            <div class="input-group" >
+                              <button type="button" class="btn btn-outline-danger btn-sm my-2" id="filterBtn">Filter</button>
+
+                        </div>
+                       </div>
+                  </form>
+                </div>
+                <!-- Product-->
+                <button class="btn btn-warning btn-sm my-2" id="downloadpdf">Download Report</button>
+                <div class="table-responsive" id="salesreport">
+
+                  <table class="table table-hover">
+                  {% if all_sales.count > 0 %}
+                    <thead>
+                      <tr>
+                        <th>SL</th>
+                        <th>Seller</th>
+                        <th>C Name</th>
+                        <th>C Address</th>
+                        <th>C Phone</th>
+                        <th>Total</th>
+                        <th>Date</th>
+                      </tr>
+                    </thead>
+                  {% endif %}
+                    <tbody>
+                      {% for sale in all_sales %}
+                        <tr>
+                        <th scope="row">{{ forloop.counter }}</th>
+                        <td>{{ sale.seller }}</td>
+                        <td>{{ sale.customerName }}</td>
+                        <td>{{ sale.customerAddress }}</td>
+                        <td>{{ sale.customerPhone }}</td>
+                        <td>{{ sale.amount }}</td>
+                        <td>{{ sale.sellingDate.date }}</td>
+                      </tr>
+                       {% empty %}
+                          <div class="alert alert-dark alert-dismissible fade show" role="alert">
+                          <span class="fw-medium">Data Not Found</span>
+                        </div>
+                      {% endfor %}
+                    </tbody>
+                  </table>
+                </div>
+
+              </div>
+            </section>
+
+
+    <script>
+    var filterbutton=document.getElementById("filterBtn");
+    filterbutton.addEventListener('click',function () {
+            document.getElementById("filterSales").submit();
+    });
+
+
+    </script>
+
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/1.3.2/jspdf.debug.js"></script>
+    <script>
+    document.getElementById("downloadpdf").addEventListener('click',createPDF);
+      function createPDF() {
+        var sTable = document.getElementById('salesreport').innerHTML;
+        var style = "<style>";
+        style = style + "table {width: 100%;font: 17px Calibri;}";
+        style = style + "table, th, td {border: solid 1px #DDD; border-collapse: collapse;";
+        style = style + "padding: 2px 3px;text-align: center;}";
+        style = style + "</style>";
+
+        // CREATE A WINDOW OBJECT.
+        var win = window.open('', '', 'height=700,width=700');
+
+        win.document.write('<html><head>');
+        win.document.write('<title>Profile</title>');   // <title> FOR PDF HEADER.
+        win.document.write(style);          // ADD STYLE INSIDE THE HEAD TAG.
+        win.document.write('</head>');
+        win.document.write('<body>');
+        win.document.write(sTable);         // THE TABLE CONTENTS INSIDE THE BODY TAG.
+        win.document.write('</body></html>');
+
+        win.document.close(); 	// CLOSE THE CURRENT WINDOW.
+
+        win.print();    // PRINT THE CONTENTS.
+    }
+    </script>
+{% endblock %}

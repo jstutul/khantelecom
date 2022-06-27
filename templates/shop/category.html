@@ -1,0 +1,87 @@
+{% extends 'shop/base.html' %}
+{% load static %}
+{% block title %}
+{{ category.name }}
+{% endblock %}
+{% block content %}
+    {% include 'shop/leftbar.html' %}
+    <main class="offcanvas-enabled" style="padding-top: 5rem;">
+      <section class="ps-lg-4 pe-lg-3 pt-4">
+        <div class="px-3 pt-2">
+          <section class="d-md-flex justify-content-between align-items-center mb-4 pb-2">
+            <h1 class="h2 mb-3 mb-md-0 me-3">{{paginator.count}} Products Found</h1>
+          </section>
+          <!-- Product grid-->
+          <div class="row g-0 mx-n2">
+              {% for product in products %}
+              <div class="col-xl-3 col-lg-6 col-md-4 col-sm-6 px-2 mb-3">
+                    <div class="card product-card card-static pb-3">
+                        <span class="badge bg-danger badge-shadow">stock {{ product.stock }}</span>
+                        <a class="card-img-top d-block overflow-hidden fix-img-size" href="{% url 'App_Shop:singleproduct' product.id %}">
+                            <img src="{{ product.photo.url }}" alt="Product">
+                        </a>
+                        <div class="card-body py-2">
+                         <a class="product-meta d-block fs-xs pb-1" href="{% url 'App_Shop:category' product.category.id %}">{{ product.category.name }}</a>
+                         <h3 class="product-title fs-sm text-truncate">
+                             <a data-toggle="tooltip" data-placement="top" title=" {{ product.name }}" href="{% url 'App_Shop:singleproduct' product.id %}">
+                                {{ product.name }}
+                             </a>
+                         </h3>
+                         <div class="product-price"><span class="text-accent">{{ product.price }}<small>৳</small></span>
+                         </div>
+                      </div>
+                        <div class="product-floating-btn">
+                         <button class="btn btn-primary btn-shadow btn-sm" type="button">+<i class="fa fa-shopping-cart fs-base ms-1"></i></button>
+                      </div>
+                    </div>
+              </div>
+              {% empty %}
+                  <div class="alert alert-danger" role="alert">
+                  There is No Product
+                </div>
+              {% endfor %}
+          </div>
+          <div class="py-4 pb-md-5 mb-4">
+            <!-- Pagination-->
+              {% if products.has_other_pages %}
+                  <nav class="d-flex justify-content-between pt-2" aria-label="Page navigation">
+                      {% if products.has_previous %}
+                      <ul class="pagination">
+                        <li class="page-item"><a class="page-link" href="?page={{ products.previous_page_number }}"><i class="fa fa-arrow-left me-2"></i>Prev</a></li>
+                      </ul>
+                      {% else %}
+                      <ul class="pagination">
+                        <li class="page-item"><a class="page-link" disabled=""><i class="fa fa-arrow-left me-2"></i>Prev</a></li>
+                      </ul>
+                      {% endif %}
+                       <ul class="pagination">
+                       {% for i in products.paginator.page_range %}
+                           {% if products.number == i %}
+                            <li class="page-item active d-none d-sm-block" aria-current="page"><span class="page-link">{{ i }}<span class="visually-hidden">(current)</span></span></li>
+                           {% else %}
+                            <li class="page-item d-none d-sm-block"><a class="page-link" href="?page={{ i }}">{{ i }}</a></li>
+                           {% endif %}
+                       {% endfor %}
+                       </ul>
+                      {% if products.has_next %}
+                      <ul class="pagination">
+                        <li class="page-item"><a class="page-link" href="?page={{ products.next_page_number }}" aria-label="Next">Next<i class="fa fa-arrow-right ms-2"></i></a></li>
+                      </ul>
+                      {% else %}
+                      <ul class="pagination">
+                        <li class="page-item"><a class="page-link"disabled="" aria-label="Next">Next<i class="fa fa-arrow-right ms-2"></i></a></li>
+                      </ul>
+                      {% endif %}
+                </nav>
+              {% endif %}
+          </div>
+        </div>
+      </section>
+      <!-- Footer-->
+      <footer class="footer bg-dark pt-2">
+        <div class="text-center text-white">
+            © Design and Developed by --
+            <a class="text-white" href="https://createx.studio/" target="_blank">Jafor Sadik Tutul | 01817552828  </a></div>
+      </footer>
+    </main>
+{% endblock %}

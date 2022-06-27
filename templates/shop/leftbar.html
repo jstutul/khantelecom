@@ -1,0 +1,45 @@
+<aside class="offcanvas offcanvas-expand w-100 border-end zindex-lg-5 pt-lg-5" id="sideNav" style="max-width: 21.875rem;">
+      <div class="pt-2 d-none d-lg-block"></div>
+      <ul class="nav nav-tabs nav-justified mt-4 mt-lg-5 mb-0" role="tablist" style="min-height: 3rem;">
+        <li class="nav-item"><a class="nav-link fw-medium active" href="#categories" data-bs-toggle="tab" role="tab">Categories</a></li>
+        <li class="nav-item d-lg-none"><a class="nav-link fs-sm" href="#" data-bs-dismiss="offcanvas" role="tab"><i class="fa fa-close fs-xs me-2"></i>Close</a></li>
+      </ul>
+      <div class="offcanvas-body px-0 pt-3 pb-0" data-simplebar>
+        <div class="tab-content">
+          <!-- Categories-->
+          <div class="sidebar-nav tab-pane fade show active" id="categories" role="tabpanel">
+            <div class="widget widget-categories">
+              <div class="accordion" id="shop-categories">
+                  {% for category in categories %}
+                    <div class="accordion-item border-bottom">
+                      <h3 class="accordion-header px-grid-gutter">
+                          <a class="nav-link-style d-block fs-md fw-normal py-3" href="{% url 'App_Shop:category' category.id %}">
+                              <span class="d-flex align-items-center">
+                                  <img src = "{{ category.icon.url }}" class="text-danger mt-n1 me-2" alt="{{ category.name }} Image" style="width:30px;height: 30px"/>
+                                  {{ category.name }} ({{ category.get_product_count }})
+                              </span>
+                          </a>
+                      </h3>
+
+                    </div>
+                  {% endfor %}
+              </div>
+            </div>
+          </div>
+
+
+        </div>
+      </div>
+      <div class="offcanvas-footer d-block px-grid-gutter pt-4 pb-4 mb-2">
+        <div class="d-flex mb-3"><i class="fa fa-user h4 mb-0 fw-normal text-primary mt-1 me-1"></i>
+          <div class="ps-2">
+            <div class="text-muted fs-sm">Support</div><a class="nav-link-style fs-md" href="tel:+8801817552828">01817552828</a>
+          </div>
+        </div>
+        <div class="d-flex mb-3"><i class="fa fa-envelope h5 mb-0 fw-normal text-primary mt-1 me-1"></i>
+          <div class="ps-2">
+            <div class="text-muted fs-sm">Email</div><a class="nav-link-style fs-md" href="mailto:customer@example.com">jstutul30@gmail.com</a>
+          </div>
+        </div>
+      </div>
+    </aside>

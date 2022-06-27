@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+{% load static %}
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <title>Khan Tele com</title>
+    <!-- SEO Meta Tags-->
+    <meta name="description" content="Cartzilla - Bootstrap E-commerce Template">
+    <meta name="keywords" content="bootstrap, shop, e-commerce, market, modern, responsive,  business, mobile, bootstrap, html5, css3, js, gallery, slider, touch, creative, clean">
+    <meta name="author" content="Createx Studio">
+    <!-- Viewport-->
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" media="screen" href="{% static 'vendor/simplebar/dist/simplebar.min.css' %}"/>
+    <link rel="stylesheet" media="screen" href="{% static 'vendor/tiny-slider/dist/tiny-slider.css' %}"/>
+    <link rel="stylesheet" media="screen" href=""/>
+    <!-- Main Theme Styles + Bootstrap-->
+    <link rel="stylesheet" media="screen" href="{% static 'css/theme.min.css' %}">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.1.1/css/all.min.css" />
+    <!-- Google Tag Manager-->
+  </head>
+  <!-- Body-->
+  <body class="handheld-toolbar-enabled">
+    <main class="page-wrapper">
+      <div class="container py-4 py-lg-5 my-4">
+        <div class="row">
+          <div class="col-md-6"  style="margin: 0 auto">
+             {%for message in messages %}
+                {%if "login_error" in message.tags %}
+                    <div class="alert alert-dark alert-dismissible fade show" role="alert">
+                      <span class="fw-medium text-light">Login Failed : </span>{{ message }}
+                      <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+                    </div>
+                {% endif %}
+            {% endfor %}
+            <div class="card border-0 shadow">
+              <div class="card-body">
+                <h2 class="h4 mb-1">Sign in</h2>
+                <hr>
+                <div class="my-4"></div>
+                <form class="needs-validation" method="post" action="{% url 'App_Shop:login' %}">
+                    {% csrf_token %}
+                  <div class="input-group mb-3"><i class="fa fa-user position-absolute top-50 translate-middle-y text-muted fs-base ms-3"></i>
+                    <input class="form-control rounded-start" name="username" type="text" placeholder="Username" required>
+                  </div>
+                  <div class="input-group mb-3"><i class="fa fa-lock position-absolute top-50 translate-middle-y text-muted fs-base ms-3"></i>
+                    <div class="password-toggle w-100">
+                      <input class="form-control" name="password" type="password" placeholder="Password" required>
+                    </div>
+                  </div>
+                  <div class="d-flex flex-wrap justify-content-between">
+                    <div class="form-check">
+                      <input class="form-check-input" type="checkbox" checked id="remember_me">
+                      <label class="form-check-label" for="remember_me">Remember me</label>
+                    </div>
+                  </div>
+                  <hr class="mt-4">
+                  <div class="text-end pt-4">
+                    <button class="btn btn-primary" type="submit"><i class="fa fa-sign-in me-2 ms-n21"></i>Sign In</button>
+                  </div>
+                </form>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </main>
+    <script src="{% static 'vendor/bootstrap/dist/js/bootstrap.bundle.min.js' %}"></script>
+  </body>
+</html>
